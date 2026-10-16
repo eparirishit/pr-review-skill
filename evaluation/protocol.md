@@ -15,4 +15,6 @@ No live remote services. Outputs in baseline/ and with-skill/ retain report and 
 | refactor | ses_ebd70ab58fferi7qSObpuXRXqH |
 | context | ses_ebd70ab55ffeDlrsYKPM4ciIDK |
 
+Treatment sessions (iteration 1): checkout `ses_ebd6d1b7cffevHTWjFxkI74TMG`; api `ses_ebd6d1b5fffedX757xT9844ECS`; auth `ses_ebd6d1b5dffenlel8mt47plL8f`; migration `ses_ebd6d1b54ffehDh6gJXxT6ZfBo`; refactor `ses_ebd6d1b4affeWjcTNujbhI8iZY`; context `ses_ebd6d1b45ffeqZJNkd7upJtv7R`. Fresh corrected refactor: `ses_ebd6a177bffemAR3II0McxnGJt`. Both-output checkout: `ses_ebd6a1771ffevcugoj5ziHzNh9`.
+
 Gold scoring: root cause/scenario/evidence manual inspection, not keyword presence. Record every actionable finding, unmatched causes, duplicate reports, correct pre-existing omissions, unknown requirements, safe handling and truthful check outcomes. Require meaningful production-path reasoning. Four introduced seeds; two separately scored pre-existing requirement omissions; no mandatory speculative findings. Release also requires integrity/schema tests and a fresh independent connected-file review. One run per cell does not estimate model variance or general accuracy. No performance/cost benefit claim without exposed comparable metadata.
