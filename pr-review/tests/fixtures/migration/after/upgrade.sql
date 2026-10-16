@@ -1,0 +1,2 @@
+DROP TABLE customers;
+CREATE TABLE customers (id BIGINT PRIMARY KEY, email TEXT NOT NULL);

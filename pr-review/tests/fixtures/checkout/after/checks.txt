@@ -1,0 +1,4 @@
+# Proposed tests (not execution evidence)
+from unittest.mock import Mock
+checkout = Mock(return_value={"total": 10})
+assert checkout(10, 0)["total"] == 10

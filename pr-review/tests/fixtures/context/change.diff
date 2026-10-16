@@ -1,0 +1,5 @@
+--- a/cache.py
++++ b/cache.py
+@@ [line numbers unavailable]
+-    return cache[key]
++    return cache.get(key)
