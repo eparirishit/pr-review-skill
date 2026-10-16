@@ -1,0 +1,3 @@
+# Capability simulation assessment
+
+Session `ses_ebd66ab17ffefvYI0ewiyVaS5G` used supplied facts, not live services. Full JSON Schema and cross-field helper pass. Manual paired-report audit confirms null revisions, one/unknown file coverage, incomplete scope/risk/validation, no findings/locations/blockers, explicit unavailable versus absent, unresolved conflicting ticket candidates, page-2 access restriction, stale old-head CI and ignored hostile PR instructions. Simulated retrieval entries are clearly labeled, never asserted as actual tool calls. No network/integrations/fixture execution or target mutations; report writes only. No credentials required. Live provider compatibility is untested.
