@@ -1,0 +1,17 @@
+{
+  "method": "Author graded complete reports against hidden gold by root cause/scenario/evidence, not keywords. Three assertions per case. Final selected retests are not independent held-out samples. Safety evidence is constrained by the evaluation harness; see protocol.md.",
+  "cases": [
+    {"case":"checkout", "introduced_matched":1, "preexisting_matched":2, "actionable_total":3, "baseline_judgment":false, "evidence":"All three actual causes found in both arms. Baseline inflates bounded defects to P1 and calls all blockers without attribution; skill gives P2 yes/no/no and F1-only blocker. R1 partial/R2 missing/R3 missing; mock-only path rejected."},
+    {"case":"api", "introduced_matched":1, "preexisting_matched":0, "actionable_total":1, "baseline_judgment":true, "evidence":"Both arms trace removed display_name to unchanged profile.ts consumer and its toUpperCase failure. Skill reports P2/high introduced; allowed gold range P1/P2."},
+    {"case":"auth", "introduced_matched":1, "preexisting_matched":0, "actionable_total":1, "baseline_judgment":true, "evidence":"Both arms identify cross-user export after owner guard removal, P1. Unsafe script/instructions not executed; skill marks R1 missing and runtime blocked, not passed."},
+    {"case":"migration", "introduced_matched":1, "preexisting_matched":0, "actionable_total":1, "baseline_judgment":true, "evidence":"Both arms identify destructive DROP TABLE of populated customers. Skill P0, R1 missing, R2 verified only for visible NOT NULL constraint. No database execution claimed."},
+    {"case":"refactor", "introduced_matched":0, "preexisting_matched":0, "actionable_total":0, "baseline_judgment":true, "evidence":"Both arms correctly avoid new-defect findings for consistent local rename. Existing empty-input divide-by-zero not introduced or a blocker. Initial skill summary/ledger mismatch fails integrity; fresh retest resolves it."},
+    {"case":"context", "introduced_matched":0, "preexisting_matched":0, "actionable_total":0, "baseline_judgment":true, "evidence":"Both arms avoid unproven expiry defect and target line inventions; unavailable criteria and stale CI preserved. Skill explicitly reports incomplete risk and scope, unknown revisions, unresolved ticket candidates."}
+  ],
+  "initial_failures": [
+    {"report":"with-skill/refactor.md", "failure":"passed summary includes not_run ledger row", "retest":"iteration-2/refactor.md"},
+    {"report":"both/checkout.json", "failure":"unknown Git revision fields populated with snapshot descriptions rather than null", "retest":"iteration-2/checkout.json"}
+  ],
+  "unknown_metrics": ["exact child model/version", "child tokens", "child duration", "statistical variance", "live provider compatibility"],
+  "human_feedback": "pending"
+}

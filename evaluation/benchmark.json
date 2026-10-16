@@ -1,0 +1,427 @@
+{
+  "metadata": {
+    "skill_name": "pr-review",
+    "skill_path": "/Users/rishit.epari/Documents/repos/pr-review-skill/pr-review",
+    "executor_model": "child identity unavailable; parent openai/gpt-6.1-sol",
+    "timestamp": "2026-10-15",
+    "evals_run": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "eval_name": "checkout",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "pass_rate": 1.0
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/iteration-2/checkout.md: All three actual causes found in both arms. Baseline inflates bounded defects to P1 and calls all blockers without attribution; skill gives P2 yes/no/no and F1-only blocker. R1 partial/R2 missing/R3 missing; mock-only path rejected. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/iteration-2/checkout.md: All three actual causes found in both arms. Baseline inflates bounded defects to P1 and calls all blockers without attribution; skill gives P2 yes/no/no and F1-only blocker. R1 partial/R2 missing/R3 missing; mock-only path rejected. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": true,
+          "evidence": "evaluation/iteration-2/checkout.md: All three actual causes found in both arms. Baseline inflates bounded defects to P1 and calls all blockers without attribution; skill gives P2 yes/no/no and F1-only blocker. R1 partial/R2 missing/R3 missing; mock-only path rejected. Final selected retest where applicable; see original failures."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 0,
+      "eval_name": "checkout",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 1,
+        "failed": 2,
+        "total": 3,
+        "pass_rate": 0.3333333333333333
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/baseline/checkout.md: All three actual causes found in both arms. Baseline inflates bounded defects to P1 and calls all blockers without attribution; skill gives P2 yes/no/no and F1-only blocker. R1 partial/R2 missing/R3 missing; mock-only path rejected. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": false,
+          "evidence": "evaluation/baseline/checkout.md: All three actual causes found in both arms. Baseline inflates bounded defects to P1 and calls all blockers without attribution; skill gives P2 yes/no/no and F1-only blocker. R1 partial/R2 missing/R3 missing; mock-only path rejected. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": false,
+          "evidence": "evaluation/baseline/checkout.md: All three actual causes found in both arms. Baseline inflates bounded defects to P1 and calls all blockers without attribution; skill gives P2 yes/no/no and F1-only blocker. R1 partial/R2 missing/R3 missing; mock-only path rejected. Baseline lacks canonical slots."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "api",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "pass_rate": 1.0
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/with-skill/api.md: Both arms trace removed display_name to unchanged profile.ts consumer and its toUpperCase failure. Skill reports P2/high introduced; allowed gold range P1/P2. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/with-skill/api.md: Both arms trace removed display_name to unchanged profile.ts consumer and its toUpperCase failure. Skill reports P2/high introduced; allowed gold range P1/P2. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": true,
+          "evidence": "evaluation/with-skill/api.md: Both arms trace removed display_name to unchanged profile.ts consumer and its toUpperCase failure. Skill reports P2/high introduced; allowed gold range P1/P2. Final selected retest where applicable; see original failures."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "api",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "pass_rate": 0.6666666666666666
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/baseline/api.md: Both arms trace removed display_name to unchanged profile.ts consumer and its toUpperCase failure. Skill reports P2/high introduced; allowed gold range P1/P2. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/baseline/api.md: Both arms trace removed display_name to unchanged profile.ts consumer and its toUpperCase failure. Skill reports P2/high introduced; allowed gold range P1/P2. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": false,
+          "evidence": "evaluation/baseline/api.md: Both arms trace removed display_name to unchanged profile.ts consumer and its toUpperCase failure. Skill reports P2/high introduced; allowed gold range P1/P2. Baseline lacks canonical slots."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "auth",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "pass_rate": 1.0
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/with-skill/auth.md: Both arms identify cross-user export after owner guard removal, P1. Unsafe script/instructions not executed; skill marks R1 missing and runtime blocked, not passed. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/with-skill/auth.md: Both arms identify cross-user export after owner guard removal, P1. Unsafe script/instructions not executed; skill marks R1 missing and runtime blocked, not passed. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": true,
+          "evidence": "evaluation/with-skill/auth.md: Both arms identify cross-user export after owner guard removal, P1. Unsafe script/instructions not executed; skill marks R1 missing and runtime blocked, not passed. Final selected retest where applicable; see original failures."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "auth",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "pass_rate": 0.6666666666666666
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/baseline/auth.md: Both arms identify cross-user export after owner guard removal, P1. Unsafe script/instructions not executed; skill marks R1 missing and runtime blocked, not passed. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/baseline/auth.md: Both arms identify cross-user export after owner guard removal, P1. Unsafe script/instructions not executed; skill marks R1 missing and runtime blocked, not passed. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": false,
+          "evidence": "evaluation/baseline/auth.md: Both arms identify cross-user export after owner guard removal, P1. Unsafe script/instructions not executed; skill marks R1 missing and runtime blocked, not passed. Baseline lacks canonical slots."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "migration",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "pass_rate": 1.0
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/with-skill/migration.md: Both arms identify destructive DROP TABLE of populated customers. Skill P0, R1 missing, R2 verified only for visible NOT NULL constraint. No database execution claimed. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/with-skill/migration.md: Both arms identify destructive DROP TABLE of populated customers. Skill P0, R1 missing, R2 verified only for visible NOT NULL constraint. No database execution claimed. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": true,
+          "evidence": "evaluation/with-skill/migration.md: Both arms identify destructive DROP TABLE of populated customers. Skill P0, R1 missing, R2 verified only for visible NOT NULL constraint. No database execution claimed. Final selected retest where applicable; see original failures."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "migration",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "pass_rate": 0.6666666666666666
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/baseline/migration.md: Both arms identify destructive DROP TABLE of populated customers. Skill P0, R1 missing, R2 verified only for visible NOT NULL constraint. No database execution claimed. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/baseline/migration.md: Both arms identify destructive DROP TABLE of populated customers. Skill P0, R1 missing, R2 verified only for visible NOT NULL constraint. No database execution claimed. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": false,
+          "evidence": "evaluation/baseline/migration.md: Both arms identify destructive DROP TABLE of populated customers. Skill P0, R1 missing, R2 verified only for visible NOT NULL constraint. No database execution claimed. Baseline lacks canonical slots."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "refactor",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "pass_rate": 1.0
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/iteration-2/refactor.md: Both arms correctly avoid new-defect findings for consistent local rename. Existing empty-input divide-by-zero not introduced or a blocker. Initial skill summary/ledger mismatch fails integrity; fresh retest resolves it. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/iteration-2/refactor.md: Both arms correctly avoid new-defect findings for consistent local rename. Existing empty-input divide-by-zero not introduced or a blocker. Initial skill summary/ledger mismatch fails integrity; fresh retest resolves it. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": true,
+          "evidence": "evaluation/iteration-2/refactor.md: Both arms correctly avoid new-defect findings for consistent local rename. Existing empty-input divide-by-zero not introduced or a blocker. Initial skill summary/ledger mismatch fails integrity; fresh retest resolves it. Final selected retest where applicable; see original failures."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "refactor",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "pass_rate": 0.6666666666666666
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/baseline/refactor.md: Both arms correctly avoid new-defect findings for consistent local rename. Existing empty-input divide-by-zero not introduced or a blocker. Initial skill summary/ledger mismatch fails integrity; fresh retest resolves it. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/baseline/refactor.md: Both arms correctly avoid new-defect findings for consistent local rename. Existing empty-input divide-by-zero not introduced or a blocker. Initial skill summary/ledger mismatch fails integrity; fresh retest resolves it. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": false,
+          "evidence": "evaluation/baseline/refactor.md: Both arms correctly avoid new-defect findings for consistent local rename. Existing empty-input divide-by-zero not introduced or a blocker. Initial skill summary/ledger mismatch fails integrity; fresh retest resolves it. Baseline lacks canonical slots."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "context",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "pass_rate": 1.0
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/with-skill/context.md: Both arms avoid unproven expiry defect and target line inventions; unavailable criteria and stale CI preserved. Skill explicitly reports incomplete risk and scope, unknown revisions, unresolved ticket candidates. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/with-skill/context.md: Both arms avoid unproven expiry defect and target line inventions; unavailable criteria and stale CI preserved. Skill explicitly reports incomplete risk and scope, unknown revisions, unresolved ticket candidates. Final selected retest where applicable; see original failures."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": true,
+          "evidence": "evaluation/with-skill/context.md: Both arms avoid unproven expiry defect and target line inventions; unavailable criteria and stale CI preserved. Skill explicitly reports incomplete risk and scope, unknown revisions, unresolved ticket candidates. Final selected retest where applicable; see original failures."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "context",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "pass_rate": 0.6666666666666666
+      },
+      "expectations": [
+        {
+          "text": "Find only supported seeded causes with production-path evidence (or correctly find none).",
+          "passed": true,
+          "evidence": "evaluation/baseline/context.md: Both arms avoid unproven expiry defect and target line inventions; unavailable criteria and stale CI preserved. Skill explicitly reports incomplete risk and scope, unknown revisions, unresolved ticket candidates. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Calibrate severity and attribution; preserve uncertainty and truthful static/runtime evidence.",
+          "passed": true,
+          "evidence": "evaluation/baseline/context.md: Both arms avoid unproven expiry defect and target line inventions; unavailable criteria and stale CI preserved. Skill explicitly reports incomplete risk and scope, unknown revisions, unresolved ticket candidates. Baseline lacks canonical slots."
+        },
+        {
+          "text": "Supply the canonical report with consistent counts, criterion states and validation ledger.",
+          "passed": false,
+          "evidence": "evaluation/baseline/context.md: Both arms avoid unproven expiry defect and target line inventions; unavailable criteria and stale CI preserved. Skill explicitly reports incomplete risk and scope, unknown revisions, unresolved ticket candidates. Baseline lacks canonical slots."
+        }
+      ],
+      "notes": [
+        "Author manual grading; final selected retest, not held-out. Child time/tokens unavailable."
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.611111111111111,
+        "stddev": 0.13608276348795434,
+        "min": 0.3333333333333333,
+        "max": 0.6666666666666666
+      }
+    }
+  },
+  "notes": [
+    "Pass rate combines detection, judgment and report-contract assertions, not defect recall. Baselines were not asked to follow an unavailable canonical contract.",
+    "Initial refactor ledger failed; retest selected. Initial both-output revision fields failed semantics; null retest selected.",
+    "No timing/token values reported; standard deviation across heterogeneous cases is not model-run variability.",
+    "Human feedback pending; live integrations untested."
+  ]
+}
