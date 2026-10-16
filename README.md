@@ -2,10 +2,7 @@
 
 A portable, requirements-first code-review skill for coding agents. Skill name: `pr-review`.
 
-**Status:** implemented on `feat/pr-review-skill`; evaluation and human review in progress. Not installed or published.
-
-- [Design specification](docs/superpowers/specs/2026-10-15-pr-review-design.md)
-- [Implementation plan](docs/superpowers/plans/2026-10-15-pr-review.md)
+**Status:** implemented on `feat/pr-review-skill`; independent review completed and its Important finding fixed. Human acceptance pending. Not installed or published.
 
 The reviewer works with local repository context, optionally enriched through authorized Git hosting and ticket integrations. It reports evidence-backed findings without editing code, posting comments, or changing Git state. No runtime engine, dependency installation, GitHub access or Jira access is required.
 
@@ -28,7 +25,7 @@ The eight-section report separates requirements, actionable P0–P3 findings, im
 python3 -m unittest discover -s pr-review/tests -p 'test_*.py' -v
 ```
 
-The tests use the Python standard library; the full Draft 2020-12 schema test additionally uses `jsonschema` if already available and explicitly skips otherwise. No package installation is automatic. The cross-field helper is not a substitute for full schema validation or behavioral evaluation.
+Report tests use the Python standard library; the full Draft 2020-12 schema test additionally uses `jsonschema` if already available. The viewer-handler regression uses an available Node executable. Both optional checks explicitly skip when unavailable; no installation is automatic. The cross-field helper is not a substitute for full schema validation or behavioral evaluation. It currently does not reject performed runtime checks under `validation=none`; the review's safety contract still forbids them, so check this combination manually.
 
 See [evaluation protocol](evaluation/protocol.md), [manual grades](evaluation/grades.json), baseline and with-skill reports. Initial defects and retests are retained. Tests exercise meaningful review behavior on fixed small snapshots; they do not prove general accuracy or production safety. Tested harness: OpenCode/macOS, parent `openai/gpt-6.1-sol`; exact child model/timing metadata unavailable. Other hosts and live GitHub/Jira/CI integrations are not tested.
 

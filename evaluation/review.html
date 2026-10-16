@@ -1013,7 +1013,8 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ reviews, status: "in_progress" }),
-      }).then(() => {
+      }).then((response) => {
+        if (!response.ok) throw new Error(`Feedback save failed: ${response.status}`);
         document.getElementById("feedback-status").textContent = "Saved";
       }).catch(() => {
         // Static mode or server unavailable — no-op on auto-save,
@@ -1045,7 +1046,8 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: payload,
-      }).then(() => {
+      }).then((response) => {
+        if (!response.ok) throw new Error(`Feedback submission failed: ${response.status}`);
         document.getElementById("done-overlay").classList.add("visible");
       }).catch(() => {
         // Server not available (static mode) — download as file

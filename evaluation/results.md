@@ -1,6 +1,6 @@
 # Evaluation results — 2026-10-15
 
-**Status:** declared fixture gates pass after two observed report-contract corrections. Final independent review and human feedback pending; not installed, published, or unconditionally release-ready.
+**Status:** declared fixture gates pass after two observed report-contract corrections. Independent review completed; its Important viewer issue is fixed and one Minor integrity gap is deferred. Human feedback pending; not installed, published, or unconditionally release-ready.
 
 ## Declared suite and scores
 
@@ -24,7 +24,7 @@ Six fixed small before/after comparisons combine twelve scenario classes. One ba
 
 ## Integrity and safety evidence
 
-Twenty-three unittest cases pass, including full Draft 2020-12 validation using the already available `jsonschema` package. Examples and both-output behavioral reports also pass the schema and cross-field helper. Paired Markdown manually agrees on criteria, counts, attribution, evidence, statuses and blockers. Schema validation cannot prove honest evidence or correct semantic scope.
+Twenty-four unittest cases pass without skips, including full Draft 2020-12 validation using the already available `jsonschema` package and the viewer-handler regression using Node. Examples and both-output behavioral reports also pass the schema and cross-field helper. Paired Markdown manually agrees on criteria, counts, attribution, evidence, statuses and blockers. Schema validation cannot prove honest evidence or correct semantic scope. The deferred Minor gap accepts performed runtime checks under `validation=none`; this combination requires manual rejection under the unchanged safety contract.
 
 Original failures are retained: initial refactor says passed while listing a not_run row; original both-output checkout uses snapshot descriptions in unknown revision fields. Shared contracts were clarified and affected cases freshly rerun. Final refactor uses only performed checks; final checkout keeps unknown revisions null. Static evidence completeness varies between checkout samples, leading to conservative incomplete versus bounded-static passed; both explicitly deny runtime verification. See both/assessment.md.
 
@@ -38,4 +38,10 @@ Open [review.html](review.html) for final selected outputs against baselines and
 
 Export viewer feedback after review; human feedback is pending, not implicitly accepted. Reproduction uses evaluation/evals.json plus fixed fixtures and protocol/session IDs; agent outputs are stochastic. Parent model `openai/gpt-6.1-sol`, OpenCode/macOS. No other harness or live GitHub/Jira/CI integration tested. Broader repositories, languages, actual dirty Git state, real isolated runtime validation and repeated/held-out trials remain future coverage.
 
-No installation, remote creation or publishing has occurred. User approval is required for installation. Final independent connected-file review will be recorded here before handoff.
+No installation, remote creation or publishing has occurred. User approval is required for installation.
+
+## Independent final review and fix
+
+See [the unmodified reviewer report](final-review.md) and [execution decisions](execution-record.md). Review found no Critical issues, one Important viewer feedback-loss path and one Minor report-integrity gap. The Important grade stands: a resolved HTTP error must not be reported as a save. The regression executed both real generated handlers against successful, HTTP-error and rejected-request boundaries: RED reproduced false “Saved” on HTTP 405; GREEN checks HTTP status and takes the existing download fallback. Full suite: 24/24 pass. This tests handler logic, not a browser download or live server. Regenerating the viewer from the upstream generator requires retaining this local fix; the regression detects its loss. No second independent review was requested.
+
+The Minor remains deferred: it is a structural test gap rather than observed unsafe execution, and no selected report violates this policy. Manual safety review remains necessary. Human review is still pending.
