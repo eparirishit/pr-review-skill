@@ -6,6 +6,8 @@ Required finding slots: unique ID, title, P0–P3 severity, independent confiden
 
 Choose one canonical category: `requirements|scope|correctness|architecture|impact|testing|security|data_integrity|performance|maintainability|operations`. Add nuance in evidence, not extra category values. JSON includes `review.read_only=true`; scope includes type, nullable base/head, reviewed_files, nullable total_changed_files and incomplete; validation includes policy, evidence_incomplete, status and checks. The schema and tests/reports/valid.json illustrate exact nesting.
 
+`scope.base` and `scope.head` contain resolved revision identities, or null when unknown. For snapshots without Git revisions, use null for both and describe the snapshot paths in context/impact evidence; a path labeled “revision unknown” is not a resolved revision.
+
 Requirement slots: unique ID, text, explicit/inferred provenance/source, one canonical status, evidence and gap. Empty sections say none/unknown briefly, not filler. Empty criteria do not imply acceptance approval. In both output mode derive both representations from one result ledger.
 
 ## Derived values

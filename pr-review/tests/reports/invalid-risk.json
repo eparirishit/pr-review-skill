@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "review": {
+    "mode": "quick", "read_only": true,
+    "scope": {"type": "diff", "base": null, "head": null, "reviewed_files": 0, "total_changed_files": null, "incomplete": true},
+    "context": {"story_source": null, "requirements_available": false, "limitations": ["Diff incomplete"]},
+    "summary": {"risk": "low", "validation_status": "not_run", "severity_counts": {"P0": 0, "P1": 0, "P2": 0, "P3": 0}}
+  },
+  "requirements": [], "findings": [], "impact_analysis": [], "improvements": [],
+  "validation": {"policy": "none", "evidence_incomplete": true, "status": "not_run", "checks": []},
+  "limitations": ["Deliberately invalid risk: incomplete scope without findings cannot derive low"],
+  "conclusion": {"blockers": [], "remaining_risks": ["Unreviewed scope"], "next_actions": ["Supply full diff"]}
+}

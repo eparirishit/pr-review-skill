@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "review": {
+    "mode": "standard",
+    "read_only": true,
+    "scope": {"type": "snapshots", "base": null, "head": null, "reviewed_files": 2, "total_changed_files": 2, "incomplete": false},
+    "context": {
+      "story_source": "user",
+      "requirements_available": true,
+      "limitations": [
+        "Provenance: pr-review/tests/fixtures/checkout/invocation.md:4 supplies explicit R1-R3 and a PR-description claim, not verified CI evidence.",
+        "Compared immutable pr-review/tests/fixtures/checkout/before and after snapshots; revision identities are unknown. checkout.py is modified; checks.txt is added. Git working-tree state is outside this snapshot scope.",
+        "No remote tools are configured; external consumers and CI results are unavailable."
+      ]
+    },
+    "summary": {"risk": "medium", "validation_status": "passed", "severity_counts": {"P0": 0, "P1": 0, "P2": 3, "P3": 0}}
+  },
+  "requirements": [
+    {
+      "id": "R1", "text": "Accept discounts 0 through 100 inclusive.", "provenance": "explicit",
+      "source": "pr-review/tests/fixtures/checkout/invocation.md:4", "status": "partial",
+      "evidence": ["after/checkout.py:2-3 accepts 0 and interior numeric values but rejects 100; manual static tracing only."],
+      "gap": "The required upper boundary is rejected (F1); proposed checks do not exercise the implementation."
+    },
+    {
+      "id": "R2", "text": "Reject negative totals.", "provenance": "explicit",
+      "source": "pr-review/tests/fixtures/checkout/invocation.md:4", "status": "missing",
+      "evidence": ["Neither before/checkout.py:1-2 nor after/checkout.py:1-4 validates total; after checkout(-10, 0) reaches the return with a negative total by static tracing."],
+      "gap": "No negative-total rejection exists in either snapshot (F2)."
+    },
+    {
+      "id": "R3", "text": "Return currency with the total.", "provenance": "explicit",
+      "source": "pr-review/tests/fixtures/checkout/invocation.md:4", "status": "missing",
+      "evidence": ["before/checkout.py:2 and after/checkout.py:4 construct dictionaries containing only total; neither signature accepts currency."],
+      "gap": "Currency is absent in both snapshots (F3); its required source/value is unspecified."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1", "title": "Accept the required 100 percent discount boundary", "severity": "P2", "confidence": "high", "category": "correctness",
+      "location": {"file": "pr-review/tests/fixtures/checkout/after/checkout.py", "start_line": 2, "end_line": 3},
+      "evidence": ["The new guard uses discount < 100, contradicting explicit R1's inclusive upper bound.", "before/checkout.py had no discount rejection; the rejection is introduced by this change."],
+      "scenario": "checkout(10, 100) takes the ValueError branch instead of returning a zero total.",
+      "impact": "Valid fully discounted checkouts fail, preventing a required supported case.",
+      "recommendation": "Make the upper bound inclusive and add a real implementation test for discount 100 and the other boundaries.",
+      "requirement_ids": ["R1"], "introduced_by_change": "yes",
+      "validation": {"status": "passed", "evidence": ["Manual static comparison and branch tracing establish the rejection; this confirms the defect, not its mitigation. No runtime execution."]}
+    },
+    {
+      "id": "F2", "title": "Reject negative input totals", "severity": "P2", "confidence": "high", "category": "requirements",
+      "location": {"file": "pr-review/tests/fixtures/checkout/after/checkout.py", "start_line": 1, "end_line": 4},
+      "evidence": ["The only guard validates discount; no total validation precedes the arithmetic.", "before/checkout.py also accepted negative totals, so this is a pre-existing omission."],
+      "scenario": "checkout(-10, 0) passes the discount guard and returns a negative total.",
+      "impact": "The checkout function accepts invalid negative amounts in violation of R2; no downstream financial effects are established by these snapshots.",
+      "recommendation": "Reject negative total inputs before computing the discount and test this path against the real function.",
+      "requirement_ids": ["R2"], "introduced_by_change": "no",
+      "validation": {"status": "passed", "evidence": ["Manual static tracing of both snapshots confirms the absent guard and reachable negative result; no runtime execution."]}
+    },
+    {
+      "id": "F3", "title": "Include currency in the checkout result", "severity": "P2", "confidence": "high", "category": "requirements",
+      "location": {"file": "pr-review/tests/fixtures/checkout/after/checkout.py", "start_line": 4, "end_line": 4},
+      "evidence": ["The returned dictionary contains only total, with no currency field or source.", "before/checkout.py:2 has the same omission; it is not introduced by the change."],
+      "scenario": "A caller requesting checkout(10, 0) receives a total without the currency required by R3.",
+      "impact": "The required response contract is incomplete; callers cannot obtain currency from this result.",
+      "recommendation": "Clarify the intended currency source/value, return it alongside total, and assert the response contract against the real implementation.",
+      "requirement_ids": ["R3"], "introduced_by_change": "no",
+      "validation": {"status": "passed", "evidence": ["Manual static inspection establishes the exact dictionary keys in both snapshots; no runtime execution."]}
+    }
+  ],
+  "impact_analysis": [
+    "Snapshot-relative anchors before/ and after/ refer to pr-review/tests/fixtures/checkout, not resolved Git revisions.",
+    "The complete supplied production path is one standalone checkout(total, discount) function. It changes from returning the input total to validating discount and calculating a discounted total; the total-only response shape remains unchanged.",
+    "No callers, persistence, network, deployment, dependency or UI files are supplied. Cross-system compatibility and currency conventions cannot be established; no concrete security, concurrency or performance defect is evidenced.",
+    "Added after/checks.txt:2-4 replaces checkout with Mock and asserts the configured return value. It neither imports nor exercises checkout.py, and covers no 100-percent, negative-total or currency case. The PR description's green-test claim is not current execution evidence."
+  ],
+  "improvements": [
+    {"recommendation": "Replace the proposed mock-only assertion with tests importing the real checkout function and covering R1-R3.", "benefit": "Tests can detect production contract violations instead of confirming a mock's configured value.", "rationale": "after/checks.txt:3 shadows checkout with Mock; the assertion is independent of the implementation. This is a validation improvement, not a separate runtime defect."}
+  ],
+  "validation": {
+    "policy": "none", "evidence_incomplete": false, "status": "passed",
+    "checks": [
+      {"name": "Manual static snapshot inventory and comparison", "kind": "static", "outcome": "passed", "evidence": ["Enumerated both supplied directories and read all three input files: modified checkout.py and added checks.txt; two changed paths reviewed."], "reason": null},
+      {"name": "Manual static requirements and attribution tracing", "kind": "static", "outcome": "passed", "evidence": ["Traced the discount guard, negative-total path and return keys against R1-R3 and compared before/after: F1 introduced, F2/F3 pre-existing."], "reason": null},
+      {"name": "Manual static test realism inspection", "kind": "static", "outcome": "passed", "evidence": ["after/checks.txt:1 labels checks proposed, and lines 2-4 exercise a Mock rather than the production function."], "reason": null},
+      {"name": "Separate completeness and report reconciliation pass", "kind": "static", "outcome": "passed", "evidence": ["Rechecked all three criteria, both changed paths, boundary/error paths, omitted currency support, available consumers, test realism and attribution; considered all twelve review dimensions. Reconciled three P2 findings, medium introduced risk, F1-only blocker and static-only execution claims."], "reason": null}
+    ]
+  },
+  "limitations": [
+    "Tools used: read for the invocation, required skill references/schema/template and all snapshot inputs; glob for snapshot inventories; patch only for the two authorized report outputs. No fixture code, tests, builds, linters or setup scripts were executed; validation=none.",
+    "Validation passed means the recorded manual static inspections were completed, not that requirements pass, tests are green or runtime behavior is verified. There are no planned executable checks in this disabled-execution review.",
+    "Unknown revision identities remain null. Snapshot scope is complete, but history, external callers and matching-revision CI are unavailable; no remote tools are configured.",
+    "Currency value/source is unspecified. Numeric type, non-finite input, rounding and integration behavior are not established; these are unverified limits, not additional findings.",
+    "No gold, plan, design or prior evaluation outputs were read. Snapshot inputs were not modified."
+  ],
+  "conclusion": {
+    "blockers": [{"finding_id": "F1", "rationale": "Although P2, this introduced rejection demonstrably prevents explicit R1's required 100-percent discount case; resolve before treating this change as complete."}],
+    "remaining_risks": ["F2 and F3 are pre-existing unmet criteria, not PR blockers solely by discovery; checkout remains incomplete against R2 and R3.", "Runtime and external compatibility remain unverified; green tests cannot be inferred from mock-only proposed checks."],
+    "next_actions": ["Correct F1 and add real boundary tests.", "Address the pre-existing R2/R3 gaps and clarify currency semantics before claiming all criteria complete.", "Run real implementation tests in an authorized environment; this review provides no automatic merge approval."]
+  }
+}
