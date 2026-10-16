@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:pr-review:report:1.0",
+  "title": "PR Review Report v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "review", "requirements", "findings", "impact_analysis", "improvements", "validation", "limitations", "conclusion"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "review": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mode", "read_only", "scope", "context", "summary"],
+      "properties": {
+        "mode": {"enum": ["quick", "standard", "deep", "requirements"]},
+        "read_only": {"const": true},
+        "scope": {
+          "type": "object", "additionalProperties": false,
+          "required": ["type", "base", "head", "reviewed_files", "total_changed_files", "incomplete"],
+          "properties": {
+            "type": {"enum": ["pr", "branch", "commit", "working_tree", "diff", "snapshots"]},
+            "base": {"$ref": "#/$defs/nullableText"}, "head": {"$ref": "#/$defs/nullableText"},
+            "reviewed_files": {"type": "integer", "minimum": 0},
+            "total_changed_files": {"type": ["integer", "null"], "minimum": 0},
+            "incomplete": {"type": "boolean"}
+          }
+        },
+        "context": {
+          "type": "object", "additionalProperties": false,
+          "required": ["story_source", "requirements_available", "limitations"],
+          "properties": {
+            "story_source": {"enum": ["ticket", "pr", "commit", "repository", "user", "inferred", null]},
+            "requirements_available": {"type": "boolean"},
+            "limitations": {"$ref": "#/$defs/strings"}
+          }
+        },
+        "summary": {
+          "type": "object", "additionalProperties": false,
+          "required": ["risk", "validation_status", "severity_counts"],
+          "properties": {
+            "risk": {"enum": ["critical", "high", "medium", "low", "incomplete"]},
+            "validation_status": {"$ref": "#/$defs/validationStatus"},
+            "severity_counts": {
+              "type": "object", "additionalProperties": false,
+              "required": ["P0", "P1", "P2", "P3"],
+              "properties": {
+                "P0": {"type": "integer", "minimum": 0}, "P1": {"type": "integer", "minimum": 0},
+                "P2": {"type": "integer", "minimum": 0}, "P3": {"type": "integer", "minimum": 0}
+              }
+            }
+          }
+        }
+      }
+    },
+    "requirements": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "text", "provenance", "source", "status", "evidence", "gap"],
+        "properties": {
+          "id": {"$ref": "#/$defs/text"}, "text": {"$ref": "#/$defs/text"},
+          "provenance": {"enum": ["explicit", "inferred"]}, "source": {"$ref": "#/$defs/nullableText"},
+          "status": {"enum": ["verified", "implemented_unverified", "partial", "missing", "unknown", "not_applicable"]},
+          "evidence": {"$ref": "#/$defs/strings"}, "gap": {"$ref": "#/$defs/nullableText"}
+        }
+      }
+    },
+    "findings": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "title", "severity", "confidence", "category", "evidence", "scenario", "impact", "recommendation", "introduced_by_change", "validation"],
+        "properties": {
+          "id": {"$ref": "#/$defs/text"}, "title": {"$ref": "#/$defs/text"},
+          "severity": {"enum": ["P0", "P1", "P2", "P3"]}, "confidence": {"enum": ["high", "medium", "low"]},
+          "category": {"enum": ["requirements", "scope", "correctness", "architecture", "impact", "testing", "security", "data_integrity", "performance", "maintainability", "operations"]},
+          "location": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/location"}]},
+          "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/text"}},
+          "scenario": {"$ref": "#/$defs/text"}, "impact": {"$ref": "#/$defs/text"},
+          "recommendation": {"$ref": "#/$defs/text"},
+          "requirement_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+          "introduced_by_change": {"enum": ["yes", "no", "unknown"]},
+          "validation": {
+            "type": "object", "additionalProperties": false, "required": ["status", "evidence"],
+            "properties": {
+              "status": {"enum": ["passed", "failed", "not_run", "blocked", "incomplete"]},
+              "evidence": {"$ref": "#/$defs/strings"}
+            }
+          }
+        }
+      }
+    },
+    "impact_analysis": {"$ref": "#/$defs/strings"},
+    "improvements": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false, "required": ["recommendation", "benefit", "rationale"],
+        "properties": {
+          "recommendation": {"$ref": "#/$defs/text"}, "benefit": {"$ref": "#/$defs/text"}, "rationale": {"$ref": "#/$defs/text"}
+        }
+      }
+    },
+    "validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["policy", "evidence_incomplete", "status", "checks"],
+      "properties": {
+        "policy": {"enum": ["auto", "none"]}, "evidence_incomplete": {"type": "boolean"},
+        "status": {"$ref": "#/$defs/validationStatus"},
+        "checks": {"type": "array", "items": {"$ref": "#/$defs/check"}}
+      }
+    },
+    "limitations": {"$ref": "#/$defs/strings"},
+    "conclusion": {
+      "type": "object", "additionalProperties": false,
+      "required": ["blockers", "remaining_risks", "next_actions"],
+      "properties": {
+        "blockers": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["finding_id", "rationale"],
+          "properties": {"finding_id": {"$ref": "#/$defs/text"}, "rationale": {"$ref": "#/$defs/text"}}
+        }},
+        "remaining_risks": {"$ref": "#/$defs/strings"}, "next_actions": {"$ref": "#/$defs/strings"}
+      }
+    }
+  },
+  "$defs": {
+    "text": {"type": "string", "minLength": 1},
+    "nullableText": {"type": ["string", "null"], "minLength": 1},
+    "strings": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+    "validationStatus": {"enum": ["passed", "issues_found", "incomplete", "not_run"]},
+    "location": {
+      "type": "object", "additionalProperties": false, "required": ["file", "start_line", "end_line"],
+      "properties": {
+        "file": {"$ref": "#/$defs/text"}, "start_line": {"type": "integer", "minimum": 1}, "end_line": {"type": "integer", "minimum": 1}
+      }
+    },
+    "check": {
+      "type": "object", "additionalProperties": false, "required": ["name", "kind", "outcome", "evidence", "reason"],
+      "properties": {
+        "name": {"$ref": "#/$defs/text"}, "kind": {"enum": ["static", "runtime"]},
+        "outcome": {"enum": ["passed", "failed", "not_run", "blocked"]},
+        "evidence": {"$ref": "#/$defs/strings"}, "reason": {"$ref": "#/$defs/nullableText"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"enum": ["passed", "failed"]}}}, "then": {"properties": {"evidence": {"minItems": 1}}}},
+        {"if": {"properties": {"outcome": {"enum": ["blocked", "not_run"]}}}, "then": {"properties": {"reason": {"$ref": "#/$defs/text"}}}}
+      ]
+    }
+  }
+}

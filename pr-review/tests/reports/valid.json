@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "review": {
+    "mode": "standard", "read_only": true,
+    "scope": {"type": "snapshots", "base": null, "head": null, "reviewed_files": 1, "total_changed_files": 1, "incomplete": false},
+    "context": {"story_source": "user", "requirements_available": true, "limitations": []},
+    "summary": {"risk": "medium", "validation_status": "passed", "severity_counts": {"P0": 0, "P1": 0, "P2": 1, "P3": 0}}
+  },
+  "requirements": [{"id": "R1", "text": "Accept discounts 0 through 100", "provenance": "explicit", "source": "user", "status": "partial", "evidence": ["checkout.py:2 excludes 100"], "gap": "Inclusive upper bound missing"}],
+  "findings": [{"id": "F1", "title": "Accept a fully discounted order", "severity": "P2", "confidence": "high", "category": "correctness", "location": {"file": "checkout.py", "start_line": 2, "end_line": 2}, "evidence": ["Guard is 0 <= discount < 100"], "scenario": "checkout(10, 100) raises ValueError", "impact": "Valid fully discounted orders fail", "recommendation": "Include 100 and test the boundary", "requirement_ids": ["R1"], "introduced_by_change": "yes", "validation": {"status": "passed", "evidence": ["Manual static tracing of guard; no runtime execution"]}}],
+  "impact_analysis": ["Checkout rejects supported input; callers must handle erroneous rejection"],
+  "improvements": [],
+  "validation": {"policy": "none", "evidence_incomplete": false, "status": "passed", "checks": [{"name": "Manual guard tracing", "kind": "static", "outcome": "passed", "evidence": ["100 < 100 is false"], "reason": null}]},
+  "limitations": ["Runtime validation disabled; static evidence only"],
+  "conclusion": {"blockers": [{"finding_id": "F1", "rationale": "Demonstrably prevents explicit requirement R1"}], "remaining_risks": ["Runtime integration not executed"], "next_actions": ["Correct inclusive bound and add production-path test"]}
+}

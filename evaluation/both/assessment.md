@@ -1,0 +1,7 @@
+# JSON/both-output assessment
+
+Original checkout pair: full Draft 2020-12 validation and cross-field helper passed; manually compared all three requirement states, three P2 findings, evidence, yes/no/no attribution, medium risk, incomplete validation, improvements and F1-only blocker. Semantic gap: base/head held snapshot labels explicitly marked revision unknown. They did not fabricate a known commit, but fail the intended null-unknown revision representation.
+
+After clarifying resolved-identity/null fields, fresh session `ses_ebd6762edffeJT85XD7YeLs76w` produced iteration-2/checkout.{json,md}. Full schema, helper and explicit null assertions pass. Both reports agree on partial/missing/missing, three high-confidence P2 findings, yes/no/no, medium risk, F1-only blocker and four passed manual static checks. This retest marks bounded static evidence complete and summary passed, unlike the earlier conservative incomplete rating. Both make runtime unverified explicit; this illustrates judgment variability in evidence completeness, not a runtime pass or measured variance estimate. No input changed.
+
+The illustrative valid.json/valid.md pair describes only one finding, deliberately not the full checkout fixture. invalid-risk.json has the right shape but wrong risk derivation and is rejected by the integrity helper. Twenty-three unittest cases include full schema validation in this environment; the standard-library helper alone is not a general schema validator.
